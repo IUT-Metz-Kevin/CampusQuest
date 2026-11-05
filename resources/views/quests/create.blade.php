@@ -10,6 +10,7 @@
     <h1>Nouvelle quête</h1>
 
     <form method="POST" action="{{ route('quests.store') }}">
+        @csrf
 
         <label for="title">Titre</label>
         <input id="title" name="title" type="text">
