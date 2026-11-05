@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreQuestRequest;
+use App\Http\Requests\UpdateQuestRequest;
 use App\Models\Category;
 use App\Models\Quest;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class QuestController extends Controller
 {
@@ -24,17 +24,9 @@ class QuestController extends Controller
         return view('quests.create', ['categories' => Category::all()]);
     }
 
-    public function store(Request $request)
+    public function store(StoreQuestRequest $request)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string'],
-            'xp' => ['required', 'integer', 'min:0', 'max:500'],
-            'difficulty' => ['required', Rule::in(['easy', 'medium', 'hard'])],
-            'category_id' => ['required', 'exists:categories,id'],
-        ]);
-
-        $quest = Quest::create($validated);
+        $quest = Quest::create($request->validated());
 
         return redirect()->route('quests.show', $quest)->with('success', 'Quête créée !');
     }
@@ -47,17 +39,9 @@ class QuestController extends Controller
         ]);
     }
 
-    public function update(Request $request, Quest $quest)
+    public function update(UpdateQuestRequest $request, Quest $quest)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string'],
-            'xp' => ['required', 'integer', 'min:0', 'max:500'],
-            'difficulty' => ['required', Rule::in(['easy', 'medium', 'hard'])],
-            'category_id' => ['required', 'exists:categories,id'],
-        ]);
-
-        $quest->update($validated);
+        $quest->update($request->validated());
 
         return redirect()->route('quests.show', $quest)->with('success', 'Quête mise à jour !');
     }
