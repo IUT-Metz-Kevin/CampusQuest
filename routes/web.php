@@ -8,4 +8,8 @@ Route::get('/', function () {
 
 Route::get('/quests', function () {
     return 'Liste des quêtes';
-});
+})->name('quests.index');
+
+Route::get('/quests/{id}', function ($id) {
+    return "Quête n°{$id}";
+})->whereNumber('id')->name('quests.show');
