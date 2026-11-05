@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class QuestController extends Controller
 {
     private array $quests = [
@@ -10,9 +12,14 @@ class QuestController extends Controller
         3 => ['title' => 'Selfie mascotte', 'xp' => 80, 'difficulty' => 'hard'],
     ];
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('quests.index', ['quests' => $this->quests]);
+        $difficulty = $request->query('difficulty');
+        $quests = $difficulty
+            ? array_filter($this->quests, fn ($q) => $q['difficulty'] === $difficulty)
+            : $this->quests;
+
+        return view('quests.index', ['quests' => $quests]);
     }
 
     public function show(int $id)
