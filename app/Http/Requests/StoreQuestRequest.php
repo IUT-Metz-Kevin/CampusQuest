@@ -20,6 +20,9 @@ class StoreQuestRequest extends FormRequest
             'xp' => ['required', 'integer', 'min:0', 'max:500'],
             'difficulty' => ['required', Rule::in(['easy', 'medium', 'hard'])],
             'category_id' => ['required', 'exists:categories,id'],
+            'featured' => ['boolean'],
+            'location_ids' => ['array'],
+            'location_ids.*' => ['exists:locations,id'],
         ];
     }
 

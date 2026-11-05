@@ -50,6 +50,22 @@
             <p class="error">{{ $message }}</p>
         @enderror
 
+        <fieldset>
+            <legend>Lieux</legend>
+            @foreach ($locations as $location)
+                <label>
+                    <input type="checkbox" name="location_ids[]" value="{{ $location->id }}" @checked(in_array($location->id, old('location_ids', [])))>
+                    {{ $location->name }}
+                </label>
+            @endforeach
+        </fieldset>
+
+        <input type="hidden" name="featured" value="0">
+        <label>
+            <input type="checkbox" name="featured" value="1" @checked(old('featured'))>
+            Quête à la une
+        </label>
+
         <button type="submit">Créer la quête</button>
     </form>
 @endsection
