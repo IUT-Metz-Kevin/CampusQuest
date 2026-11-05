@@ -33,10 +33,10 @@ class QuestController extends Controller
         ]);
     }
 
-    public function show(int $id)
+    public function show(Quest $quest)
     {
         return view('quests.show', [
-            'quest' => Quest::with(['category', 'locations'])->findOrFail($id),
+            'quest' => $quest->load(['category', 'locations']),
         ]);
     }
 
@@ -64,22 +64,20 @@ class QuestController extends Controller
         $quest = Quest::create(Arr::except($validated, 'location_ids'));
         $quest->locations()->sync($validated['location_ids'] ?? []);
 
-        return redirect()->route('quests.show', $quest->id)->with('success', 'Quête créée !');
+        return redirect()->route('quests.show', $quest)->with('success', 'Quête créée !');
     }
 
-    public function edit(int $id)
+    public function edit(Quest $quest)
     {
         return view('quests.edit', [
-            'quest' => Quest::findOrFail($id),
+            'quest' => $quest,
             'categories' => Category::all(),
             'locations' => Location::all(),
         ]);
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, Quest $quest)
     {
-        $quest = Quest::findOrFail($id);
-
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:100'],
             'description' => ['required', 'string'],
@@ -94,12 +92,11 @@ class QuestController extends Controller
         $quest->update(Arr::except($validated, 'location_ids'));
         $quest->locations()->sync($validated['location_ids'] ?? []);
 
-        return redirect()->route('quests.show', $quest->id)->with('success', 'Quête mise à jour !');
+        return redirect()->route('quests.show', $quest)->with('success', 'Quête mise à jour !');
     }
 
-    public function destroy(int $id)
+    public function destroy(Quest $quest)
     {
-        $quest = Quest::findOrFail($id);
         $quest->locations()->detach();
         $quest->delete();
 
