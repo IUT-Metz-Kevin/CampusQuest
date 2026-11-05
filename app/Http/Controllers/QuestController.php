@@ -7,11 +7,13 @@ use App\Http\Requests\UpdateQuestRequest;
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\Quest;
+use App\Services\QuestService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class QuestController extends Controller
 {
+    public function __construct(private QuestService $quests) {}
+
     public function index(Request $request)
     {
         $quests = Quest::query()
@@ -51,8 +53,7 @@ class QuestController extends Controller
 
     public function store(StoreQuestRequest $request)
     {
-        $quest = Quest::create(Arr::except($request->validated(), 'location_ids'));
-        $quest->locations()->sync($request->validated('location_ids', []));
+        $quest = $this->quests->create($request->validated());
 
         return redirect()->route('quests.show', $quest)->with('success', 'Quête créée !');
     }
@@ -68,8 +69,7 @@ class QuestController extends Controller
 
     public function update(UpdateQuestRequest $request, Quest $quest)
     {
-        $quest->update(Arr::except($request->validated(), 'location_ids'));
-        $quest->locations()->sync($request->validated('location_ids', []));
+        $this->quests->update($quest, $request->validated());
 
         return redirect()->route('quests.show', $quest)->with('success', 'Quête mise à jour !');
     }
