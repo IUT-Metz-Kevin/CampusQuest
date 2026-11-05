@@ -2,7 +2,17 @@
 
 @section('title', $quest['title'])
 
+@section('styles')
+    @vite('resources/css/quests.css')
+@endsection
+
 @section('content')
     <h1>{{ $quest['title'] }}</h1>
-    <p>{{ $quest['xp'] }} XP</p>
+
+    <p>
+        <span class="xp">{{ $quest['xp'] }} XP</span>
+        <span class="badge badge--{{ $quest['difficulty'] }}">{{ $quest['difficulty'] }}</span>
+    </p>
+
+    <p><a href="{{ route('quests.index') }}">← Retour aux quêtes</a></p>
 @endsection
