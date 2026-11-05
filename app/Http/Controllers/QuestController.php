@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreQuestRequest;
+use App\Http\Requests\UpdateQuestRequest;
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\Quest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Validation\Rule;
 
 class QuestController extends Controller
 {
@@ -48,21 +49,10 @@ class QuestController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreQuestRequest $request)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string'],
-            'xp' => ['required', 'integer', 'min:0', 'max:500'],
-            'difficulty' => ['required', Rule::in(['easy', 'medium', 'hard'])],
-            'category_id' => ['required', 'exists:categories,id'],
-            'featured' => ['boolean'],
-            'location_ids' => ['array'],
-            'location_ids.*' => ['exists:locations,id'],
-        ]);
-
-        $quest = Quest::create(Arr::except($validated, 'location_ids'));
-        $quest->locations()->sync($validated['location_ids'] ?? []);
+        $quest = Quest::create(Arr::except($request->validated(), 'location_ids'));
+        $quest->locations()->sync($request->validated('location_ids', []));
 
         return redirect()->route('quests.show', $quest)->with('success', 'Quête créée !');
     }
@@ -76,21 +66,10 @@ class QuestController extends Controller
         ]);
     }
 
-    public function update(Request $request, Quest $quest)
+    public function update(UpdateQuestRequest $request, Quest $quest)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string'],
-            'xp' => ['required', 'integer', 'min:0', 'max:500'],
-            'difficulty' => ['required', Rule::in(['easy', 'medium', 'hard'])],
-            'category_id' => ['required', 'exists:categories,id'],
-            'featured' => ['boolean'],
-            'location_ids' => ['array'],
-            'location_ids.*' => ['exists:locations,id'],
-        ]);
-
-        $quest->update(Arr::except($validated, 'location_ids'));
-        $quest->locations()->sync($validated['location_ids'] ?? []);
+        $quest->update(Arr::except($request->validated(), 'location_ids'));
+        $quest->locations()->sync($request->validated('location_ids', []));
 
         return redirect()->route('quests.show', $quest)->with('success', 'Quête mise à jour !');
     }
