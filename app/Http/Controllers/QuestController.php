@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Location;
 use App\Models\Quest;
 use Illuminate\Http\Request;
 
@@ -35,5 +36,22 @@ class QuestController extends Controller
         return view('quests.show', [
             'quest' => Quest::with(['category', 'locations'])->findOrFail($id),
         ]);
+    }
+
+    public function create()
+    {
+        return view('quests.create', [
+            'categories' => Category::all(),
+            'locations' => Location::all(),
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->only(['title', 'description', 'xp', 'difficulty', 'category_id', 'featured']);
+        $quest = Quest::create($data);
+        $quest->locations()->sync($request->input('location_ids', []));
+
+        return redirect()->route('quests.show', $quest->id)->with('success', 'Quête créée !');
     }
 }
