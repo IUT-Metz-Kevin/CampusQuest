@@ -9,19 +9,16 @@
 @section('content')
     <h1>Quêtes disponibles</h1>
 
-    <div class="filters">
-        <a href="{{ route('quests.index') }}">Toutes</a>
-        <a href="{{ route('quests.index', ['difficulty' => 'easy']) }}">Faciles</a>
-        <a href="{{ route('quests.index', ['difficulty' => 'hard']) }}">Difficiles</a>
-    </div>
-
     <ul class="quest-list">
-        @forelse ($quests as $id => $quest)
+        @forelse ($quests as $quest)
             <li>
-                <a class="quest-card" href="{{ route('quests.show', $id) }}">
-                    <span>{{ $quest['title'] }}</span>
-                    <span class="xp">{{ $quest['xp'] }} XP</span>
-                    <span class="badge badge--{{ $quest['difficulty'] }}">{{ $quest['difficulty'] }}</span>
+                <a class="quest-card" href="{{ route('quests.show', $quest->id) }}">
+                    <span>
+                        {{ $quest->title }}
+                        <small>— {{ $quest->category->name }}</small>
+                    </span>
+                    <span class="xp">{{ $quest->xp }} XP</span>
+                    <span class="badge badge--{{ $quest->difficulty }}">{{ $quest->difficulty }}</span>
                 </a>
             </li>
         @empty
