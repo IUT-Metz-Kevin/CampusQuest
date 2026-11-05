@@ -1,25 +1,12 @@
 <?php
 
+use App\Http\Controllers\QuestController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/quests', function () {
-    $quests = [
-        1 => ['title' => 'Salle 404', 'xp' => 50, 'difficulty' => 'easy'],
-        2 => ['title' => 'Quiz campus', 'xp' => 30, 'difficulty' => 'easy'],
-        3 => ['title' => 'Selfie mascotte', 'xp' => 80, 'difficulty' => 'hard'],
-    ];
-    return view('quests.index', ['quests' => $quests]);
-})->name('quests.index');
-
-Route::get('/quests/{id}', function ($id) {
-    $quests = [
-        1 => ['title' => 'Salle 404', 'xp' => 50, 'difficulty' => 'easy'],
-        2 => ['title' => 'Quiz campus', 'xp' => 30, 'difficulty' => 'easy'],
-        3 => ['title' => 'Selfie mascotte', 'xp' => 80, 'difficulty' => 'hard'],
-    ];
-    return view('quests.show', ['quest' => $quests[$id]]);
-})->whereNumber('id')->name('quests.show');
+Route::get('/quests', [QuestController::class, 'index'])->name('quests.index');
+Route::get('/quests/{id}', [QuestController::class, 'show'])
+    ->whereNumber('id')->name('quests.show');
