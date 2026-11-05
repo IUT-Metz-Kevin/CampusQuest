@@ -32,4 +32,14 @@ class QuestFactory extends Factory
             'category_id' => Category::factory(),
         ];
     }
+
+    /**
+     * Une quête mise en avant.
+     */
+    public function featured(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'featured' => true,
+        ]);
+    }
 }
