@@ -9,6 +9,10 @@
 <body>
     @include('partials.nav')
     <main>
+        @if (session('success'))
+            <div class="flash">{{ session('success') }}</div>
+        @endif
+
         @yield('content')
     </main>
 </body>

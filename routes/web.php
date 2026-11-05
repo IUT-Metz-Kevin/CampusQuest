@@ -8,5 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/quests', [QuestController::class, 'index'])->name('quests.index');
+Route::get('/quests/create', [QuestController::class, 'create'])->name('quests.create');
+Route::post('/quests', [QuestController::class, 'store'])->name('quests.store');
 Route::get('/quests/{id}', [QuestController::class, 'show'])
     ->whereNumber('id')->name('quests.show');

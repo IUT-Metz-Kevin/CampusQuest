@@ -3,11 +3,13 @@
 @section('title', 'Quêtes')
 
 @section('styles')
-    @vite('resources/css/quests.css')
+    @vite(['resources/css/quests.css', 'resources/css/forms.css'])
 @endsection
 
 @section('content')
     <h1>Quêtes disponibles</h1>
+
+    <p><a href="{{ route('quests.create') }}">➕ Nouvelle quête</a></p>
 
     <ul class="quest-list">
         @forelse ($quests as $quest)
