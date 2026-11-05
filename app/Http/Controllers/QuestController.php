@@ -24,6 +24,8 @@ class QuestController extends Controller
 
     public function show(int $id)
     {
-        return view('quests.show', ['quest' => $this->quests[$id]]);
+        abort_unless(isset($this->quests[$id]), 404);
+
+        return view('quests.show', ['quest' => $this->quests[$id], 'id' => $id]);
     }
 }
