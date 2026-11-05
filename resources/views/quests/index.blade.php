@@ -14,7 +14,7 @@
     <ul class="quest-list">
         @forelse ($quests as $quest)
             <li>
-                <a class="quest-card" href="{{ route('quests.show', $quest->id) }}">
+                <a class="quest-card" href="{{ route('quests.show', $quest) }}">
                     <span>
                         {{ $quest->title }}
                         <small>— {{ $quest->category->name }}</small>
