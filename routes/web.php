@@ -16,5 +16,10 @@ Route::get('/quests', function () {
 })->name('quests.index');
 
 Route::get('/quests/{id}', function ($id) {
-    return "Quête n°{$id}";
+    $quests = [
+        1 => ['title' => 'Salle 404', 'xp' => 50, 'difficulty' => 'easy'],
+        2 => ['title' => 'Quiz campus', 'xp' => 30, 'difficulty' => 'easy'],
+        3 => ['title' => 'Selfie mascotte', 'xp' => 80, 'difficulty' => 'hard'],
+    ];
+    return view('quests.show', ['quest' => $quests[$id]]);
 })->whereNumber('id')->name('quests.show');
