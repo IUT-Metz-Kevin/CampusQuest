@@ -21,7 +21,8 @@ class QuestController extends Controller
                 fn ($query, $categoryId) => $query->where('category_id', $categoryId)
             )
             ->orderByDesc('xp')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('quests.index', [
             'quests' => $quests,

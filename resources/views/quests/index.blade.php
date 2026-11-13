@@ -41,4 +41,6 @@
             <p>Aucune quête ne correspond à votre recherche.</p>
         @endforelse
     </ul>
+
+    {{ $quests->links() }}
 @endsection
