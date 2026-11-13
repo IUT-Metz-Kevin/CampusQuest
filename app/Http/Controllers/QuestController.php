@@ -11,6 +11,7 @@ class QuestController extends Controller
     public function index(Request $request)
     {
         $quests = Quest::query()
+            ->with('category')
             ->when(
                 $request->query('search'),
                 fn ($query, $search) => $query->where('title', 'like', "%{$search}%")
@@ -30,6 +31,8 @@ class QuestController extends Controller
 
     public function show(int $id)
     {
-        return view('quests.show', ['quest' => Quest::findOrFail($id)]);
+        return view('quests.show', [
+            'quest' => Quest::with(['category', 'locations'])->findOrFail($id),
+        ]);
     }
 }
