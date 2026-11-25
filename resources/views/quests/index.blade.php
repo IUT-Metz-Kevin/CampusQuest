@@ -9,7 +9,9 @@
 @section('content')
     <h1>Quêtes disponibles</h1>
 
-    <p><a href="{{ route('quests.create') }}">➕ Nouvelle quête</a></p>
+    @can('admin')
+        <p><a href="{{ route('quests.create') }}">➕ Nouvelle quête</a></p>
+    @endcan
 
     <form class="quest-filters" method="GET" action="{{ route('quests.index') }}">
         <input type="search" name="search" value="{{ request('search') }}" placeholder="Rechercher une quête…">

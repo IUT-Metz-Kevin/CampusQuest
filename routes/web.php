@@ -12,7 +12,7 @@ Route::resource('quests', QuestController::class)
     ->only(['index', 'show'])
     ->where(['quest' => '[0-9]+']);
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'can:admin'])->group(function () {
     Route::resource('quests', QuestController::class)
         ->except(['index', 'show'])
         ->where(['quest' => '[0-9]+']);

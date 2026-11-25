@@ -2,7 +2,10 @@
     <a href="/">Campus Quest</a>
     <a href="{{ route('quests.index') }}">Quêtes</a>
     <a href="{{ route('leaderboard.index') }}">Classement</a>
-    <a href="{{ route('quests.create') }}">Nouvelle quête</a>
+
+    @can('admin')
+        <a href="{{ route('quests.create') }}">Nouvelle quête</a>
+    @endcan
 
     <span class="nav__user">
         @auth

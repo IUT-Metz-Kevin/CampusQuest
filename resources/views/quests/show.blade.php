@@ -28,12 +28,15 @@
 
     <div class="actions">
         <a href="{{ route('quests.index') }}">← Retour aux quêtes</a>
-        <a href="{{ route('quests.edit', $quest) }}">✏️ Modifier</a>
 
-        <form method="POST" action="{{ route('quests.destroy', $quest) }}">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="danger">Supprimer</button>
-        </form>
+        @can('admin')
+            <a href="{{ route('quests.edit', $quest) }}">✏️ Modifier</a>
+
+            <form method="POST" action="{{ route('quests.destroy', $quest) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="danger">Supprimer</button>
+            </form>
+        @endcan
     </div>
 @endsection

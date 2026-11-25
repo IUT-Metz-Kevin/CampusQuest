@@ -9,7 +9,7 @@ class UpdateQuestRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // l'autorisation arrive en S6
+        return $this->user()->can('admin');
     }
 
     public function rules(): array
