@@ -9,6 +9,7 @@
 
     <span class="nav__user">
         @auth
+            <a href="{{ route('my-quests.index') }}">Mes quêtes</a>
             <span>{{ Auth::user()->name }}</span>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

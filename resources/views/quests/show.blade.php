@@ -26,6 +26,17 @@
         @endforelse
     </ul>
 
+    @auth
+        @if (Auth::user()->acceptedQuests->contains($quest))
+            <p>✅ Vous avez accepté cette quête.</p>
+        @else
+            <form method="POST" action="{{ route('my-quests.store', $quest) }}">
+                @csrf
+                <button type="submit">Accepter la quête</button>
+            </form>
+        @endif
+    @endauth
+
     <div class="actions">
         <a href="{{ route('quests.index') }}">← Retour aux quêtes</a>
 
