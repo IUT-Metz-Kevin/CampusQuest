@@ -1,11 +1,12 @@
-import "./bootstrap";
+import './bootstrap';
 
-document.querySelectorAll("form[data-accept-quest]").forEach((form) => {
-    form.addEventListener("submit", async (event) => {
+document.querySelectorAll('form[data-accept-quest]').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const response = await fetch(form.action, {
-            method: "POST",
+            method: 'POST',
+            headers: { Accept: 'application/json' },
             body: new FormData(form),
         });
 
@@ -14,6 +15,9 @@ document.querySelectorAll("form[data-accept-quest]").forEach((form) => {
             return;
         }
 
-        form.outerHTML = "<p>✅ Vous avez accepté cette quête.</p>";
+        const data = await response.json();
+
+        form.outerHTML = '<p>✅ Vous avez accepté cette quête.</p>';
+        document.querySelector('[data-my-quests-count]').textContent = data.count;
     });
 });

@@ -20,9 +20,15 @@ class MyQuestController extends Controller
 
     public function store(Request $request, Quest $quest)
     {
-        $request->user()
-            ->acceptedQuests()
-            ->syncWithoutDetaching([$quest->id]);
+        $user = $request->user();
+        $user->acceptedQuests()->syncWithoutDetaching([$quest->id]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'accepted' => true,
+                'count' => $user->acceptedQuests()->count(),
+            ]);
+        }
 
         return back()->with('success', 'Quête acceptée !');
     }
