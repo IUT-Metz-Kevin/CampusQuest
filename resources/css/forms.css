@@ -1,6 +1,14 @@
-form { display: grid; gap: 0.5rem; }
+form {
+    display: grid;
+    gap: 0.5rem;
+}
 
-input[type="text"], input[type="number"], textarea, select {
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
     border: 1px solid #334155;
@@ -18,10 +26,18 @@ button {
     cursor: pointer;
 }
 
-button.danger { background: #991b1b; color: #fff; }
+button.danger {
+    background: #991b1b;
+    color: #fff;
+}
 
-fieldset { border: 1px solid #334155; border-radius: 0.5rem; }
-fieldset label { margin-right: 1rem; }
+fieldset {
+    border: 1px solid #334155;
+    border-radius: 0.5rem;
+}
+fieldset label {
+    margin-right: 1rem;
+}
 
 .flash {
     margin-bottom: 1rem;
@@ -30,6 +46,14 @@ fieldset label { margin-right: 1rem; }
     background: #166534;
 }
 
-.error { margin: 0; color: #fca5a5; font-size: 0.9rem; }
+.error {
+    margin: 0;
+    color: #fca5a5;
+    font-size: 0.9rem;
+}
 
-.actions { display: flex; gap: 1rem; align-items: center; }
+.actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}

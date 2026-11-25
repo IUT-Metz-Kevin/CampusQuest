@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -21,7 +21,9 @@ body {
     line-height: 1.5;
 }
 
-a { color: var(--accent); }
+a {
+    color: var(--accent);
+}
 
 .nav {
     display: flex;
@@ -31,7 +33,9 @@ a { color: var(--accent); }
     font-weight: 600;
 }
 
-.nav a { text-decoration: none; }
+.nav a {
+    text-decoration: none;
+}
 
 main {
     max-width: 48rem;
@@ -39,4 +43,26 @@ main {
     padding: 2rem 1rem;
 }
 
-h1 { margin-top: 0; }
+h1 {
+    margin-top: 0;
+}
+
+.nav__user {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-left: auto;
+}
+
+.nav__user form {
+    margin: 0;
+}
+
+.nav__user button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    cursor: pointer;
+}
