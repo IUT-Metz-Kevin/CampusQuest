@@ -13,3 +13,5 @@ Route::resource('quests', QuestController::class)
 
 Route::get('/classement', [LeaderboardController::class, 'index'])
     ->name('leaderboard.index');
+
+require __DIR__.'/auth.php';
