@@ -9,6 +9,7 @@ use App\Models\Location;
 use App\Models\Quest;
 use App\Services\QuestService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class QuestController extends Controller
 {
@@ -55,6 +56,8 @@ class QuestController extends Controller
     {
         $quest = $this->quests->create($request->validated());
 
+        Cache::forget('leaderboard');
+
         return redirect()->route('quests.show', $quest)->with('success', 'Quête créée !');
     }
 
@@ -71,6 +74,8 @@ class QuestController extends Controller
     {
         $this->quests->update($quest, $request->validated());
 
+        Cache::forget('leaderboard');
+
         return redirect()->route('quests.show', $quest)->with('success', 'Quête mise à jour !');
     }
 
@@ -78,6 +83,8 @@ class QuestController extends Controller
     {
         $quest->locations()->detach();
         $quest->delete();
+
+        Cache::forget('leaderboard');
 
         return redirect()->route('quests.index')->with('success', 'Quête supprimée !');
     }
