@@ -15,7 +15,7 @@
         <span class="badge">{{ $quest->category->name }}</span>
     </p>
 
-    <p>{{ $quest->description }}</p>
+    <p>{!! nl2br(e($quest->description)) !!}</p>
 
     <h2>Lieux</h2>
     <ul>

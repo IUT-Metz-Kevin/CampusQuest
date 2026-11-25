@@ -29,6 +29,10 @@
         <a class="reset" href="{{ route('quests.index') }}">Réinitialiser</a>
     </form>
 
+    @if (request('search'))
+        <p>Résultats pour « {{ request('search') }} »</p>
+    @endif
+
     <ul class="quest-list">
         @forelse ($quests as $quest)
             <li>
